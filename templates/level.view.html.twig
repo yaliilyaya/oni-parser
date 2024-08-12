@@ -14,7 +14,7 @@
             {% for item in list %}
             <tr>
                 <td>
-                    <a href="{{ path('level.view', {level: level}) }}?x={{ root }}/{{ item.name }}[{{ item.number }}]">{{ item.name }}</a>
+                    <a href="{{ path('level.view', {level: level}) }}?x={{ root }}/{{ item.name }}[{{ item.number }}]">{{ item.name }}-{{ item.number }}</a>
                 </td>
                 <td>
                     {{ root }}/{{ item.name }}[{{ item.number }}]
