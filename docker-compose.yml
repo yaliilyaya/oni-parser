@@ -1,0 +1,21 @@
+version: '3'
+#https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose-ru
+services:
+  #PHP Service
+  app:
+    image: git.fabrikant.ru:4567/i.didenko/packet-sender/app:latest
+    build:
+      context: dockerfile/app-base
+    restart: always
+    volumes:
+      - ./:/project
+  #Nginx Service
+  webserver:
+    image: git.fabrikant.ru:4567/i.didenko/packet-sender/webserver:latest
+    build:
+      context: dockerfile/webserver
+    depends_on:
+      - app
+    restart: always
+    volumes:
+      - ./:/project
