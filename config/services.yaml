@@ -26,16 +26,6 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous one
 
-    App\Client\MultiIntegrationClient:
-        public: true
-    App\Client\NepClient:
-        public: true
-    App\Strategy\PacketGeneratorStrategy:
-        public: true
-    Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface:
-        "@Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBag"
-    Symfony\Component\HttpFoundation\Session\Flash\FlashBag:
-        public: true
-    App\Repository\OrganizationRepository:
+    App\Repository\LevelRepository:
         arguments:
-            - '@doctrine.dbal.organization_connection'
+            $levelDir: '%kernel.project_dir%/data'

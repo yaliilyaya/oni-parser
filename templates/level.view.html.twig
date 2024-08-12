@@ -1,0 +1,29 @@
+{% extends '@Symfony6AdminLte/layout.html.twig' %}
+
+{% block page_content %}
+    <table class="table">
+
+        <thead>
+            <tr>
+                <td width="200">name</td>
+                <td>path</td>
+                <td>view</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+            <tr>
+                <td>
+                    <a href="{{ path('level.view', {level: level}) }}?x={{ root }}/{{ item.name }}[{{ item.number }}]">{{ item.name }}</a>
+                </td>
+                <td>
+                    {{ root }}/{{ item.name }}[{{ item.number }}]
+                </td>
+                <td>
+                    <a href="{{ path('level.view-xml', {level: level}) }}?x={{ root }}/{{ item.name }}[{{ item.number }}]">xml</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
