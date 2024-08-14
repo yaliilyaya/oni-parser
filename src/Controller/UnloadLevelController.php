@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Repository\LevelRepository;
 use App\Serializer\Xml2ArraySerializer;
 use Doctrine\Common\Collections\ArrayCollection;
+use SimpleXMLElement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +31,7 @@ class UnloadLevelController extends AbstractController
         $pnta = $this->levelRepository->loadLevel($level)
             ->xpath('/Oni/PNTA/Positions/Vector3');
 
-        $list = (new ArrayCollection($pnta))->map(function (\SimpleXMLElement $vector) {
+        $list = (new ArrayCollection($pnta))->map(function (SimpleXMLElement $vector) {
             $vectorString = explode(' ', (string)$vector);
             return [
                 'x' => (float)$vectorString[0],
@@ -70,6 +71,33 @@ class UnloadLevelController extends AbstractController
         })->toArray();
 
         $this->levelRepository->saveSource($level, 'plea', $list);
+
+        $count = count($list);
+        $startIndex = rand(0, $count);
+        return $this->json([
+            'count' => $count,
+            'startIndex' => $startIndex,
+            'current' => array_splice($list, $startIndex, 100)
+        ]);
+    }
+
+    #[Route("/unload-level/{level}/agqg", name: "unload-level.agqg")]
+    public function agqg(
+        string $level
+    ) {
+        $agqg = $this->levelRepository->loadLevel($level)
+            ->xpath('/Oni/AGQG/Quads/AGQGQuad/Points');
+
+        $list = (new ArrayCollection($agqg))->map(function (SimpleXMLElement $value) {
+            return [
+                'a' => (int)$value->Int32[0],
+                'b' => (int)$value->Int32[1],
+                'c' => (int)$value->Int32[2],
+                'd' => (int)$value->Int32[3],
+            ];
+        })->toArray();
+
+        $this->levelRepository->saveSource($level, 'agqg', $list);
 
         $count = count($list);
         $startIndex = rand(0, $count);
