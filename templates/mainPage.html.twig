@@ -1,5 +1,28 @@
 {% extends '@Symfony6AdminLte/layout.html.twig' %}
 
 {% block page_content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <td width="200">Уровень</td>
+                <td>Описание</td>
+                <td>tools</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a href="{{ path('level.view', {level: 'level19'}) }}">level19</a>
+                </td>
+                <td>19 Уровень</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="{{ path('unload-level.pnta', {level: 'level19'}) }}">pnta</a>
+                        <a class="btn btn-default btn-sm" href="{{ path('unload-level.plea', {level: 'level19'}) }}">plea</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
 {% endblock %}

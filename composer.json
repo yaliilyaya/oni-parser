@@ -91,7 +91,9 @@
         ],
         "chmod-template-path": [
             "mkdir -p data/tmp",
-            "chmod 777 data/tmp"
+            "chmod 777 data/tmp",
+            "mkdir -p unloading",
+            "chmod 777 unloading"
         ]
     },
     "conflict": {

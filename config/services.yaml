@@ -29,3 +29,4 @@ services:
     App\Repository\LevelRepository:
         arguments:
             $levelDir: '%kernel.project_dir%/data'
+            $unloadingDir: '%kernel.project_dir%/unloading'
