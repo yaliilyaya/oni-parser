@@ -18,3 +18,4 @@
 ###< symfony/phpunit-bridge ###
 
 docker-compose.override.yml
+/unloading/*

@@ -28,14 +28,10 @@ class UnloadLevelController extends AbstractController
     ): Response
     {
         $pnta = $this->levelRepository->loadLevel($level)
-            ->xpath('/Oni/PNTA');
+            ->xpath('/Oni/PNTA/Positions/Vector3');
 
-        /** @var \SimpleXMLElement $pntaItem */
-        $pntaItem = $pnta[0];
-
-        $list = $this->xml2ArraySerializer->desiralize($pntaItem->Positions->Vector3);
-        $list = (new ArrayCollection($list))->map(function ($vectorString) {
-            $vectorString = explode(' ', $vectorString);
+        $list = (new ArrayCollection($pnta))->map(function (\SimpleXMLElement $vector) {
+            $vectorString = explode(' ', (string)$vector);
             return [
                 'x' => (float)$vectorString[0],
                 'y' => (float)$vectorString[1],
@@ -60,18 +56,16 @@ class UnloadLevelController extends AbstractController
     ): Response
     {
         $plea = $this->levelRepository->loadLevel($level)
-            ->xpath('/Oni/PLEA');
-        /** @var \SimpleXMLElement $pntaItem */
-        $pleaItem = $plea[0];
+            ->xpath('/Oni/PLEA/Planes/Plane');
 
-        $list = $this->xml2ArraySerializer->desiralize($pleaItem->Planes->Plane);
-        $list = (new ArrayCollection($list))->map(function ($vectorString) {
-            $vectorString = explode(' ', $vectorString);
+        $list = (new ArrayCollection($plea))->map(function ($value) {
+            $value = explode(' ', (string)$value);
+
             return [
-                'a' => (float)$vectorString[0],
-                'b' => (float)$vectorString[1],
-                'c' => (float)$vectorString[2],
-                'd' => (float)$vectorString[3],
+                'a' => (float)$value[0],
+                'b' => (float)$value[1],
+                'c' => (float)$value[2],
+                'd' => (float)$value[3],
             ];
         })->toArray();
 
